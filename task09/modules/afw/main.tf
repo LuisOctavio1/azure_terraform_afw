@@ -71,6 +71,12 @@ resource "azurerm_route_table" "main" {
     next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = azurerm_firewall.main.ip_configuration[0].private_ip_address
   }
+
+  route {
+    name           = "${var.firewall_name}-internet-route"
+    address_prefix = "${azurerm_public_ip.firewall.ip_address}/32"
+    next_hop_type  = "Internet"
+  }
 }
 
 resource "azurerm_subnet_route_table_association" "aks" {
@@ -144,7 +150,7 @@ resource "azurerm_firewall_nat_rule_collection" "main" {
 }
 
 resource "azurerm_network_security_rule" "allow_firewall_to_lb" {
-  name                        = "AllowAccessFromFirewallPublicIPToLoadBalancerIP"
+  name                        = var.nsg_rule_name
   priority                    = 400
   direction                   = "Inbound"
   access                      = "Allow"

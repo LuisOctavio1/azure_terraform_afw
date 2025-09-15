@@ -30,6 +30,11 @@ variable "aks_loadbalancer_ip" {
 
 variable "aks_name" {
   description = "name of the aks"
-  type = string
-  
+  type        = string
+
+}
+
+variable "nsg_rule_name" {
+  description = "name of the nsg rule"
+  type        = string
 }

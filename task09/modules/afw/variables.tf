@@ -56,3 +56,8 @@ variable "aks_name" {
   description = "aks name"
   type        = string
 }
+
+variable "nsg_rule_name" {
+  description = "name of the nsg rule"
+  type        = string
+}

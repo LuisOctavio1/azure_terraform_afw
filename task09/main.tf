@@ -12,4 +12,5 @@ module "afw" {
   aks_loadbalancer_ip  = var.aks_loadbalancer_ip
   common_tags          = local.common_tags
   aks_name             = var.aks_name
+  nsg_rule_name        = var.nsg_rule_name
 }
