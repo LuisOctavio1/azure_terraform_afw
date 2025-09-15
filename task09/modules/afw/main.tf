@@ -13,6 +13,17 @@ data "azurerm_subnet" "aks" {
   resource_group_name  = var.resource_group_name
 }
 
+data "azurerm_kubernetes_cluster" "main" {
+  name                = var.aks_name
+  resource_group_name = var.resource_group_name
+}
+
+data "azurerm_resources" "aks_nsg" {
+  resource_group_name = data.azurerm_kubernetes_cluster.main.node_resource_group
+  type               = "Microsoft.Network/networkSecurityGroups"
+}
+
+
 resource "azurerm_subnet" "firewall" {
   name                 = var.firewall_subnet_name
   resource_group_name  = var.resource_group_name
@@ -37,12 +48,12 @@ resource "azurerm_firewall" "main" {
   name                = var.firewall_name
   location            = var.location
   resource_group_name = var.resource_group_name
-  sku_name            = "AZFW_VNet"
+  sku_name            = "${var.firewall_name}-AZFW_VNet"
   sku_tier            = "Standard"
   tags                = var.common_tags
 
   ip_configuration {
-    name                 = "configuration"
+    name                 = "${var.firewall_name}-configuration"
     subnet_id            = azurerm_subnet.firewall.id
     public_ip_address_id = azurerm_public_ip.firewall.id
   }
@@ -55,7 +66,7 @@ resource "azurerm_route_table" "main" {
   tags                = var.common_tags
 
   route {
-    name                   = "default-route"
+    name                   = "${var.firewall_name}-default-route"
     address_prefix         = "0.0.0.0/0"
     next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = azurerm_firewall.main.ip_configuration[0].private_ip_address
@@ -130,4 +141,20 @@ resource "azurerm_firewall_nat_rule_collection" "main" {
       protocols             = rule.value.protocols
     }
   }
+}
+
+resource "azurerm_network_security_rule" "allow_firewall_to_lb" {
+  name                        = "AllowAccessFromFirewallPublicIPToLoadBalancerIP"
+  priority                    = 400
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range          = "*"
+  destination_port_range     = "80"
+  source_address_prefix      = azurerm_public_ip.firewall.ip_address
+  destination_address_prefix = var.aks_loadbalancer_ip
+  resource_group_name        = data.azurerm_kubernetes_cluster.main.node_resource_group
+  network_security_group_name = data.azurerm_resources.aks_nsg.resources[0].name
+  
+  depends_on = [azurerm_public_ip.firewall]
 }

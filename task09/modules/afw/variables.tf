@@ -51,3 +51,8 @@ variable "common_tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "aks_name" {
+  description = "aks name"
+  type = string
+}
