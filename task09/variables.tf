@@ -27,3 +27,9 @@ variable "aks_loadbalancer_ip" {
   description = "Public IP address of the AKS load balancer"
   type        = string
 }
+
+variable "aks_name" {
+  description = "name of the aks"
+  type = string
+  
+}
