@@ -43,21 +43,21 @@ resource "azurerm_firewall" "main" {
 
   ip_configuration {
     name                 = "configuration"
-    subnet_id           = azurerm_subnet.firewall.id
+    subnet_id            = azurerm_subnet.firewall.id
     public_ip_address_id = azurerm_public_ip.firewall.id
   }
 }
 
 resource "azurerm_route_table" "main" {
-  name                          = var.route_table_name
-  location                      = var.location
-  resource_group_name           = var.resource_group_name
-  tags                          = var.common_tags
+  name                = var.route_table_name
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  tags                = var.common_tags
 
   route {
-    name           = "default-route"
-    address_prefix = "0.0.0.0/0"
-    next_hop_type  = "VirtualAppliance"
+    name                   = "default-route"
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = azurerm_firewall.main.ip_configuration[0].private_ip_address
   }
 }
@@ -77,10 +77,10 @@ resource "azurerm_firewall_application_rule_collection" "main" {
   dynamic "rule" {
     for_each = local.application_rules
     content {
-      name = rule.value.name
+      name             = rule.value.name
       source_addresses = rule.value.source_addresses
-      target_fqdns = rule.value.target_fqdns
-      
+      target_fqdns     = rule.value.target_fqdns
+
       dynamic "protocol" {
         for_each = rule.value.protocols
         content {
