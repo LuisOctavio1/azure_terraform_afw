@@ -48,7 +48,7 @@ resource "azurerm_firewall" "main" {
   name                = var.firewall_name
   location            = var.location
   resource_group_name = var.resource_group_name
-  sku_name            = "${var.firewall_name}-AZFW_VNet"
+  sku_name            = "AZFW_VNet"
   sku_tier            = "Standard"
   tags                = var.common_tags
 
