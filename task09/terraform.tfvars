@@ -1,0 +1,1 @@
+aks_loadbalancer_ip = "68.220.231.48"
