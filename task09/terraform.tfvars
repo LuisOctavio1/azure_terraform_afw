@@ -1,6 +1,6 @@
 aks_loadbalancer_ip = "20.253.1.227"
 resource_group_name = "cmtr-y010np4n-mod9-rg"
-location            = "East US 2"
+location            = "East US"
 vnet_name           = "cmtr-y010np4n-mod9-vnet"
 aks_subnet_name     = "aks-snet"
 firewall_pip_name   = "cmtr-y010np4n-mod9-pip"
