@@ -20,7 +20,7 @@ data "azurerm_kubernetes_cluster" "main" {
 
 data "azurerm_resources" "aks_nsg" {
   resource_group_name = data.azurerm_kubernetes_cluster.main.node_resource_group
-  type               = "Microsoft.Network/networkSecurityGroups"
+  type                = "Microsoft.Network/networkSecurityGroups"
 }
 
 
@@ -149,12 +149,12 @@ resource "azurerm_network_security_rule" "allow_firewall_to_lb" {
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "*"
-  source_port_range          = "*"
-  destination_port_range     = "80"
-  source_address_prefix      = azurerm_public_ip.firewall.ip_address
-  destination_address_prefix = var.aks_loadbalancer_ip
-  resource_group_name        = data.azurerm_kubernetes_cluster.main.node_resource_group
+  source_port_range           = "*"
+  destination_port_range      = "80"
+  source_address_prefix       = azurerm_public_ip.firewall.ip_address
+  destination_address_prefix  = var.aks_loadbalancer_ip
+  resource_group_name         = data.azurerm_kubernetes_cluster.main.node_resource_group
   network_security_group_name = data.azurerm_resources.aks_nsg.resources[0].name
-  
+
   depends_on = [azurerm_public_ip.firewall]
 }

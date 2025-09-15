@@ -54,5 +54,5 @@ variable "common_tags" {
 
 variable "aks_name" {
   description = "aks name"
-  type = string
+  type        = string
 }

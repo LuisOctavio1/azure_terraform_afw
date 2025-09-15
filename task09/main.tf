@@ -11,5 +11,5 @@ module "afw" {
   route_table_name     = local.route_table_name
   aks_loadbalancer_ip  = var.aks_loadbalancer_ip
   common_tags          = local.common_tags
-  aks_name = var.aks_name
+  aks_name             = var.aks_name
 }
