@@ -85,7 +85,7 @@ resource "azurerm_subnet_route_table_association" "aks" {
 }
 
 resource "azurerm_firewall_application_rule_collection" "main" {
-  name                = "${var.firewall_name}-app-rules"
+  name                = var.app_rule_name
   azure_firewall_name = azurerm_firewall.main.name
   resource_group_name = var.resource_group_name
   priority            = 100
@@ -110,7 +110,7 @@ resource "azurerm_firewall_application_rule_collection" "main" {
 }
 
 resource "azurerm_firewall_network_rule_collection" "main" {
-  name                = "${var.firewall_name}-net-rules"
+  name                = var.net_rules_name
   azure_firewall_name = azurerm_firewall.main.name
   resource_group_name = var.resource_group_name
   priority            = 100
@@ -129,7 +129,7 @@ resource "azurerm_firewall_network_rule_collection" "main" {
 }
 
 resource "azurerm_firewall_nat_rule_collection" "main" {
-  name                = "${var.firewall_name}-nat-rules"
+  name                = var.nat_rule_name
   azure_firewall_name = azurerm_firewall.main.name
   resource_group_name = var.resource_group_name
   priority            = 100

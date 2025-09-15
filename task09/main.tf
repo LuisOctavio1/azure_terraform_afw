@@ -13,4 +13,7 @@ module "afw" {
   common_tags          = local.common_tags
   aks_name             = var.aks_name
   nsg_rule_name        = var.nsg_rule_name
+  nat_rule_name        = var.nat_rule_name
+  net_rules_name       = var.net_rules_name
+  app_rule_name        = var.app_rule_name
 }

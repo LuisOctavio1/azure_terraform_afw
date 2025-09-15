@@ -38,3 +38,18 @@ variable "nsg_rule_name" {
   description = "name of the nsg rule"
   type        = string
 }
+
+variable "net_rules_name" {
+  description = "name of the nsg rule"
+  type        = string
+}
+
+variable "app_rule_name" {
+  description = "name of the nsg rule"
+  type        = string
+}
+
+variable "nat_rule_name" {
+  description = "name of the nsg rule"
+  type        = string
+}
