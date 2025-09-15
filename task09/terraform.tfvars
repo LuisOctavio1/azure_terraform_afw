@@ -1,4 +1,4 @@
-aks_loadbalancer_ip = "68.220.231.48"
+aks_loadbalancer_ip = "4.150.66.4"
 resource_group_name = "cmtr-y010np4n-mod9-rg"
 location            = "East US 2"
 vnet_name           = "cmtr-y010np4n-mod9-vnet"
